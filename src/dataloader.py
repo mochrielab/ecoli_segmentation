@@ -62,10 +62,15 @@ class dataloader(object):
                                            target_height=self.crop_height,
                                            target_width=self.crop_width)
     
-        resized_annotation = tf.image.crop_to_bounding_box(image,
+        resized_annotation = tf.image.crop_to_bounding_box(annotation,
                                            offset_height, offset_width,
                                            target_height=self.crop_height,
                                            target_width=self.crop_width)
+        
+        resized_image = tf.to_float(resized_image)
+        resized_image = resized_image/128 - 1
+        
+        resized_annotation = tf.cast(resized_annotation, tf.int64)
         
         images, annotations = tf.train.shuffle_batch(
                 [resized_image, resized_annotation],
@@ -99,5 +104,5 @@ def test(tfrecords_filename):
         coord.join(threads)
 
 
-if __name__ == 'main':
+if __name__ == '__main__':
     test('data/dataset1_train.tfrecords')

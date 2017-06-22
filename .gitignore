@@ -5,3 +5,8 @@
 # matlab
 *.sav
 
+# python
+*.pyc
+*__pycache__
+
+logs/

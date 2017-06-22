@@ -110,16 +110,18 @@ def check(original_images, reconstructed_images):
         print(np.allclose(*img_pair_to_compare))
         print(np.allclose(*annotation_pair_to_compare))
         
-if __name__ == 'main':
-    data_path = "data/dataset1/"      
-    train_images, test_images, train_labels, test_labels = \
-        get_filenames(data_path, test_ratio = 0.2)
-    
-    tfrecords_filename = 'data/dataset1_train.tfrecords'
-    original_images = write_tfrecords(tfrecords_filename, 
-                                      train_images, train_labels, max_counter = 6)
-    reconstructed_images = read_tfrecords(tfrecords_filename, max_counter = 6)
-    check(original_images, reconstructed_images)
-    tfrecords_filename = 'data/dataset1_test.tfrecords'
-    original_images = write_tfrecords(tfrecords_filename, 
-                                      test_images, test_labels, max_counter = 6)
+if __name__ == '__main__':
+    for i in range(1, 5):
+        data_path = "data/dataset"+str(i)+"/"
+        print(data_path)
+        train_images, test_images, train_labels, test_labels = \
+            get_filenames(data_path, test_ratio = 0.2)
+        
+        tfrecords_filename = 'data/dataset'+str(i)+'_train.tfrecords'
+        original_images = write_tfrecords(tfrecords_filename, 
+                                          train_images, train_labels, max_counter = 6)
+        reconstructed_images = read_tfrecords(tfrecords_filename, max_counter = 6)
+        check(original_images, reconstructed_images)
+        tfrecords_filename = 'data/dataset'+str(i)+'_test.tfrecords'
+        original_images = write_tfrecords(tfrecords_filename, 
+                                          test_images, test_labels, max_counter = 6)
